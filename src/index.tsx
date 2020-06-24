@@ -792,7 +792,7 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
       newHeight = findClosestSnap(newHeight, this.props.snap.y, this.props.snapGap);
     }
 
-    const delta = rotateByDegree(this.orientation, {
+    const delta = rotateByDegree(-this.orientation, {
       width: newWidth - original.width,
       height: newHeight - original.height,
     });
@@ -846,7 +846,7 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
     if (!isResizing || !this.resizable) {
       return;
     }
-    const delta = rotateByDegree(this.orientation, {
+    const delta = rotateByDegree(-this.orientation, {
       width: this.size.width - original.width,
       height: this.size.height - original.height,
     });
