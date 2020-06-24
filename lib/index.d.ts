@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Direction } from './resizer';
+export declare function rotateByDegree(degree: number, vector: NumberSize): NumberSize;
 export declare type ResizeDirection = Direction;
 export interface Enable {
     top?: boolean;
@@ -106,6 +107,7 @@ declare global {
 }
 export declare class Resizable extends React.PureComponent<ResizableProps, State> {
     flexDir?: 'row' | 'column';
+    orientation: number;
     get parentNode(): HTMLElement | null;
     get window(): Window | null;
     get propsSize(): Size;
