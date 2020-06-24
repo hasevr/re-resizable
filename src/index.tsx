@@ -2,6 +2,19 @@ import * as React from 'react';
 import { Resizer, Direction } from './resizer';
 import memoize from 'fast-memoize';
 
+export function rotateByDegree(
+  degree: number, vector: NumberSize): NumberSize {
+  const rad = degree * (Math.PI / 180)
+  const c = Math.cos(rad)
+  const s = Math.sin(rad)
+
+  return {
+    width: c * vector.width - s * vector.height,
+    height: s * vector.width + c * vector.height
+  }
+}
+
+
 const DEFAULT_SIZE = {
   width: 'auto',
   height: 'auto',
@@ -264,6 +277,7 @@ interface NewSize {
 }
 export class Resizable extends React.PureComponent<ResizableProps, State> {
   flexDir?: 'row' | 'column';
+  orientation: number = 0;
 
   get parentNode(): HTMLElement | null {
     if (!this.resizable) {
@@ -778,10 +792,10 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
       newHeight = findClosestSnap(newHeight, this.props.snap.y, this.props.snapGap);
     }
 
-    const delta = {
+    const delta = rotateByDegree(this.orientation, {
       width: newWidth - original.width,
       height: newHeight - original.height,
-    };
+    });
 
     if (width && typeof width === 'string') {
       if (endsWith(width, '%')) {
@@ -832,10 +846,10 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
     if (!isResizing || !this.resizable) {
       return;
     }
-    const delta = {
+    const delta = rotateByDegree(this.orientation, {
       width: this.size.width - original.width,
       height: this.size.height - original.height,
-    };
+    });
     if (this.props.onResizeStop) {
       this.props.onResizeStop(event, direction, this.resizable, delta);
     }
