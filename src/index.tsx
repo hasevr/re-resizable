@@ -561,26 +561,28 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
     let newHeight = original.height;
     const extraHeight = lockAspectRatioExtraHeight || 0;
     const extraWidth = lockAspectRatioExtraWidth || 0;
+
+    const delta = rotateByDegree(-this.orientation, { width: clientX - original.x, height: clientY - original.y });
     if (hasDirection('right', direction)) {
-      newWidth = original.width + ((clientX - original.x) * resizeRatio) / scale;
+      newWidth = original.width + (delta.width * resizeRatio) / scale;
       if (lockAspectRatio) {
         newHeight = (newWidth - extraWidth) / this.ratio + extraHeight;
       }
     }
     if (hasDirection('left', direction)) {
-      newWidth = original.width - ((clientX - original.x) * resizeRatio) / scale;
+      newWidth = original.width - (delta.width * resizeRatio) / scale;
       if (lockAspectRatio) {
         newHeight = (newWidth - extraWidth) / this.ratio + extraHeight;
       }
     }
     if (hasDirection('bottom', direction)) {
-      newHeight = original.height + ((clientY - original.y) * resizeRatio) / scale;
+      newHeight = original.height + (delta.height * resizeRatio) / scale;
       if (lockAspectRatio) {
         newWidth = (newHeight - extraHeight) * this.ratio + extraWidth;
       }
     }
     if (hasDirection('top', direction)) {
-      newHeight = original.height - ((clientY - original.y) * resizeRatio) / scale;
+      newHeight = original.height - (delta.height * resizeRatio) / scale;
       if (lockAspectRatio) {
         newWidth = (newHeight - extraHeight) * this.ratio + extraWidth;
       }
