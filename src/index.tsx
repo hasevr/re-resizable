@@ -2,18 +2,16 @@ import * as React from 'react';
 import { Resizer, Direction } from './resizer';
 import memoize from 'fast-memoize';
 
-export function rotateByDegree(
-  degree: number, vector: NumberSize): NumberSize {
-  const rad = degree * (Math.PI / 180)
-  const c = Math.cos(rad)
-  const s = Math.sin(rad)
+export function rotateByDegree(degree: number, vector: NumberSize): NumberSize {
+  const rad = degree * (Math.PI / 180);
+  const c = Math.cos(rad);
+  const s = Math.sin(rad);
 
   return {
     width: c * vector.width - s * vector.height,
-    height: s * vector.width + c * vector.height
-  }
+    height: s * vector.width + c * vector.height,
+  };
 }
-
 
 const DEFAULT_SIZE = {
   width: 'auto',
